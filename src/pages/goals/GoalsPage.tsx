@@ -58,28 +58,33 @@ export default function GoalsPage() {
         <div className="bg-white rounded-lg shadow">
           <ul className="divide-y divide-gray-200">
             {goals.length > 0 ? (
-              goals.map((goal) => (
-                <li key={goal.id} className="p-4 flex items-center justify-between hover:bg-gray-50">
-                  <div className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={goal.is_completed}
-                      onChange={() => toggleComplete(goal.id, !goal.is_completed)}
-                      className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                    />
-                    <div className="ml-4">
-                      <p className={`text-lg font-medium text-gray-900 ${goal.is_completed ? 'line-through text-gray-500' : ''}`}>
-                        {goal.title}
-                      </p>
-                      <p className="text-sm text-gray-500">{goal.priority} {goal.due_date ? `· Due ${new Date(goal.due_date).toLocaleDateString()}` : ''}</p>
+                goals.map((goal) => (
+                <li key={goal.id} className="hover:bg-gray-50">
+                    <Link to={`/goal/${goal.id}`} className="p-4 flex items-center justify-between w-full">
+                    <div className="flex items-center">
+                        <input
+                        type="checkbox"
+                        checked={goal.is_completed}
+                        onChange={(e) => {
+                            e.preventDefault(); // Prevent navigation when clicking checkbox
+                            toggleComplete(goal.id, !goal.is_completed);
+                        }}
+                        className="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <div className="ml-4">
+                        <p className={`text-lg font-medium text-gray-900 ${goal.is_completed ? 'line-through text-gray-500' : ''}`}>
+                            {goal.title}
+                        </p>
+                        <p className="text-sm text-gray-500">{goal.priority} {goal.due_date ? `· Due ${new Date(goal.due_date).toLocaleDateString()}` : ''}</p>
+                        </div>
                     </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <button onClick={() => handleOpenModal(goal)} className="text-sm text-indigo-600 hover:text-indigo-900">Edit</button>
-                    <button onClick={() => deleteGoal(goal.id)} className="text-sm text-red-600 hover:text-red-900">Delete</button>
-                  </div>
+                    <div className="flex items-center space-x-2">
+                        <button onClick={(e) => { e.preventDefault(); handleOpenModal(goal); }} className="text-sm text-indigo-600 hover:text-indigo-900">Edit</button>
+                        <button onClick={(e) => { e.preventDefault(); deleteGoal(goal.id); }} className="text-sm text-red-600 hover:text-red-900">Delete</button>
+                    </div>
+                    </Link>
                 </li>
-              ))
+                ))
             ) : (
               <li className="p-6 text-center text-gray-500">
                 You haven't set any goals yet. Let's add one!

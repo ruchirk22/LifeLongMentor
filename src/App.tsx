@@ -8,6 +8,7 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import OnboardingPage from './components/onboarding/OnboardingPage';
 import GoalsPage from './pages/goals/GoalsPage'; // Import the new Goals page
+import GoalDetailPage from './pages/goals/GoalDetailPage'; // Import the GoalDetailPage
 
 // This component protects routes that require a user to be logged in.
 const AuthRoute = ({ children }: { children: React.ReactElement }) => {
@@ -90,13 +91,23 @@ function App() {
             </AuthRoute>
           }
         />
-        {/* Add the new goals route */}
+        {/* Update the /goals route and add the new detail route */}
         <Route
             path="/goals"
             element={
                 <AuthRoute>
                     <OnboardingRoute>
                         <GoalsPage />
+                    </OnboardingRoute>
+                </AuthRoute>
+            }
+        />
+        <Route
+            path="/goal/:goalId"
+            element={
+                <AuthRoute>
+                    <OnboardingRoute>
+                        <GoalDetailPage />
                     </OnboardingRoute>
                 </AuthRoute>
             }

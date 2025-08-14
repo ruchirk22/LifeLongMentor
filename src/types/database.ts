@@ -91,6 +91,46 @@ export interface Database {
           }
         ];
       };
+      goal_steps: {
+        Row: {
+          id: string;
+          goal_id: string;
+          user_id: string;
+          title: string;
+          is_completed: boolean;
+          created_at: string;
+          step_order: number | null;
+        };
+        Insert: {
+          id?: string;
+          goal_id: string;
+          user_id: string;
+          title: string;
+          is_completed?: boolean;
+          created_at?: string;
+          step_order?: number | null;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          is_completed?: boolean;
+          step_order?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'goal_steps_goal_id_fkey';
+            columns: ['goal_id'];
+            referencedRelation: 'goals';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'goal_steps_user_id_fkey';
+            columns: ['user_id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
